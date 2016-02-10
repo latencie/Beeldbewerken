@@ -7,10 +7,10 @@ def main():
 	m = 255
 	img = cv2.imread('cameraman.png', 0)
 	histo = histogramEqualization(img, m)
-	
-	cv2.imshow(histo, img)
-	cv2.waitKey(0)
-	cv2.destroyAllWindows()
+
+    cv2.imshow('histo', histo)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 
 def histogramEqualization(f, m, bins= 100):
