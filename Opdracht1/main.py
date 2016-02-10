@@ -7,31 +7,21 @@ def main():
 	m = 255
 	img = cv2.imread('cameraman.png', 0)
 	histo = histogramEqualization(img, m)
+	show_image('Original', img, 'Equalized', histo)
 
-    cv2.imshow('histo', histo)
+
+def show_image(name, image, name2, image2):
+    cv2.imshow(name, image)
+    cv2.imshow(name2, image2)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
 
 
 def histogramEqualization(f, m, bins= 100):
     his, be = np.histogram(f, range=(0,m), bins=bins)
     his = his.astype(float)/sum(his)
     return np.interp(f, be[1:], np.cumsum(his))
-
-def show_images(images, cm=plt.cm.gray, axis='off', titles=[]):
-    number_images = len(images)
-    fig = plt.figure()
-
-    for i, img in enumerate(images):
-        fig.add_subplot(1, number_images, i + 1)
-        plt.axis(axis)
-
-        if len(titles) != 0:
-            plt.suptitle(titles[0])
-            plt.title(titles[i+1])
-
-        plt.imshow(img, cmap=cm)
-    plt.show()
 
 if __name__ == "__main__":
 	main()
