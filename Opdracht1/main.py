@@ -18,5 +18,20 @@ def histogramEqualization(f, m, bins=[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8,
     his = his.astype(float)/sum(his)
     return np.interp(f, be[1:], np.cumsum(his))
 
+def show_images(images, cm=plt.cm.gray, axis='off', titles=[]):
+    number_images = len(images)
+    fig = plt.figure()
+
+    for i, img in enumerate(images):
+        fig.add_subplot(1, number_images, i + 1)
+        plt.axis(axis)
+
+        if len(titles) != 0:
+            plt.suptitle(titles[0])
+            plt.title(titles[i+1])
+
+        plt.imshow(img, cmap=cm)
+    plt.show()
+
 if __name__ == "__main__":
 	main()
