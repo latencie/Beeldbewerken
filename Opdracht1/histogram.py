@@ -6,21 +6,21 @@ import matplotlib.pyplot as plt
 def main():
     #this part shows the cameraman original and the cameraman after equalization
     m = 255
-    img = cv2.imread('cameraman.png', 0)
+    img = cv2.imread('images/cameraman.png', 0)
     histo = histogramEqualization(img, m)
     show_images([img, histo])
 
     #This part shows the same object from 4 angles equalized
-    img_angle_1 = cv2.imread('view1.jpg', 0)
+    img_angle_1 = cv2.imread('images/view1.jpg', 0)
     histo_1 = histogramEqualization(img_angle_1, m)
 
-    img_angle_2 = cv2.imread('view2.jpg', 0)
+    img_angle_2 = cv2.imread('images/view2.jpg', 0)
     histo_2 = histogramEqualization(img_angle_2, m)
 
-    img_angle_3 = cv2.imread('view3.jpg', 0)
+    img_angle_3 = cv2.imread('images/view3.jpg', 0)
     histo_3 = histogramEqualization(img_angle_3, m)
 
-    img_angle_4 = cv2.imread('view4.jpg', 0)
+    img_angle_4 = cv2.imread('images/view4.jpg', 0)
     histo_4 = histogramEqualization(img_angle_4, m)
 
     show_images([histo_1, histo_2, histo_3, histo_4])
