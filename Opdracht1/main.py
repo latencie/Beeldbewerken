@@ -4,10 +4,10 @@ import cv2
 import matplotlib.pyplot as plt
 
 def main():
-	m = 255
-	img = cv2.imread('cameraman.png', 0)
-	histo = histogramEqualization(img, m)
-	show_image('Original', img, 'Equalized', histo)
+    m = 255
+    img = cv2.imread('cameraman.png', 0)
+    histo = histogramEqualization(img, m)
+    show_image('Original', img, 'Equalized', histo)
 
 
 def show_image(name, image, name2, image2):
@@ -15,7 +15,7 @@ def show_image(name, image, name2, image2):
     cv2.imshow(name2, image2)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
-
+    
 
 
 def histogramEqualization(f, m, bins= 100):
@@ -24,4 +24,4 @@ def histogramEqualization(f, m, bins= 100):
     return np.interp(f, be[1:], np.cumsum(his))
 
 if __name__ == "__main__":
-	main()
+    main()
