@@ -10,6 +10,9 @@ def main():
     histo = histogramEqualization(img, m)
     show_images([img, histo])
 
+    #Show the histograms
+    show_histograms(img, histo)
+
     #This part shows the same object from 4 angles equalized
     img_angle_1 = cv2.imread('images/view1.jpg', 0)
     histo_1 = histogramEqualization(img_angle_1, m)
@@ -42,10 +45,18 @@ def show_images(images, cm=plt.cm.gray, axis='off', titles=[]):
         plt.imshow(img, cmap=cm)
     plt.show()
 
+#This is the function from the assignment but changed to work of a range from 0 to m.
 def histogramEqualization(f, m, bins= 100):
     his, be = np.histogram(f, range=(0,m), bins=bins)
     his = his.astype(float)/sum(his)
     return np.interp(f, be[1:], np.cumsum(his))
+
+def show_histograms(img, img2):
+    # For original image histogram
+    plt.hist(img.flatten(), bins=20, range=[0,255], color='b');
+    # For equalized histogram
+    plt.hist(img2.flatten(), bins=20, range=[0,1], color='b');
+    plt.show()
 
 if __name__ == "__main__":
     main()
