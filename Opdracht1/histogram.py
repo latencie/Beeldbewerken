@@ -1,10 +1,14 @@
+#Ajit Jena & Lars Lokhoff
+#5730066 & 10606165
+
 from __future__ import division
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
+#Main runs all the questions (except question one and 4) in sequence
 def main():
-    #this part shows the cameraman original and the cameraman after equalization
+    #This part shows the cameraman original and the cameraman after equalization
     m = 255
     img = cv2.imread('images/cameraman.png', 0)
     histo = histogramEqualization(img, m)
@@ -29,7 +33,7 @@ def main():
     show_images([histo_1, histo_2, histo_3, histo_4])
 
 
-# This function displays the given images together with their titles
+#This function displays the given images together with their titles
 def show_images(images, cm=plt.cm.gray, axis='off', titles=[]):
     number_images = len(images)
     fig = plt.figure()
@@ -51,11 +55,18 @@ def histogramEqualization(f, m, bins= 100):
     his = his.astype(float)/sum(his)
     return np.interp(f, be[1:], np.cumsum(his))
 
-def show_histograms(img, img2):
-    # For original image histogram
+#This function shows the 2 histograms of the given pictures to compare in one figure
+def show_histograms(img, histo):
+    plt.figure(1)
+
+    #For original image
+    plt.subplot(211)
     plt.hist(img.flatten(), bins=20, range=[0,255], color='b');
-    # For equalized histogram
-    plt.hist(img2.flatten(), bins=20, range=[0,1], color='b');
+
+    #The equalized image
+    plt.subplot(212)
+    plt.hist(histo.flatten(), bins=20, range=[0,1], color='b');
+
     plt.show()
 
 if __name__ == "__main__":
