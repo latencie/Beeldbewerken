@@ -56,6 +56,7 @@ def gauss(s=2):
 	x = y = arange(-half_sample, half_sample + 1)
 	X, Y = meshgrid(x,y)
 	# Returns Gaussian kernel 
+	print sum(g(X,Y, s))
 	return g(X,Y, s)
 
 
