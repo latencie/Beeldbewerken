@@ -11,7 +11,13 @@ def main():
     img2 = canny(img, s)
     imshow(img2, cmap=cm.gray)
     show()
+<<<<<<< HEAD
     
+=======
+    imshow(img, cmap=cm.gray)
+    show()
+
+>>>>>>> c7372d5fdcf4bebab7ab86bd3c49483e41c773b6
 def canny(F, s):
     Fx = gD(F, s, 1, 0)
     Fy = gD(F, s, 0, 1)
@@ -21,11 +27,18 @@ def canny(F, s):
 
 
     width, height = F.shape
-    new_img = empty([width, height])
+    new_img = zeros((width, height))
+    # Fw = np.sqrt(Fx ** 2 + Fy ** 2) 
 
+<<<<<<< HEAD
     t = 0.007
     for i in range(0, height - 1):
         for j in range(0, width - 1):
+=======
+    t = 0.02
+    for i in range(0, width - 1):
+        for j in range(0, height - 1):
+>>>>>>> c7372d5fdcf4bebab7ab86bd3c49483e41c773b6
             first_check = sqrt(Fx[i, j] * Fx[i, j] + Fy[i, j] * Fy[i, j])
 
             if(first_check > t):
@@ -45,7 +58,7 @@ def zero_crossings(F, s, Fx, Fy, Fxx, Fyy, Fxy, x, y):
         elif i == 2:
             x_check = 0
             y_check = 1
-        else:
+        elif i == 3:
             x_check = -1
             y_check = 1
 
@@ -74,35 +87,52 @@ def zero_crossings(F, s, Fx, Fy, Fxx, Fyy, Fxy, x, y):
             return True
 
 def gD(F, s, iorder, jorder):
-    if(iorder == 0):
-        A = gauss(g, s)
-    elif(iorder == 1):
-        A = gauss(g1, s)
-    elif(iorder == 2):
-        A = gauss(g2, s)
+    # Create empty kernel of size 5*s by 5*s and fill it
+    A = empty([5*s])
+    B = empty([5*s])
+    for i in range(5 * int(s)):
+            x = i - (5.0*s)/2.0
 
-    if(jorder == 0):
-        B = gauss(g, s)
-    elif(jorder == 1):
-        B = gauss(g1, s)
-    elif(jorder == 2):
-        B = gauss(g2, s)
+            # Looks what the iorder and picks the right function.
+            if(iorder == 0):
+                A[i] = g(x, s)
 
-    Fc = convolve1d(F, A, axis=0, mode='nearest')
-    Fc = convolve1d(Fc, B, axis=1, mode='nearest')
+            elif(iorder == 1):
+                A[i] = g1(x, s)
 
-    return Fc
+            elif(iorder == 2):
+                A[i] = g2(x, s)
+
+            # Looks what the jorder and picks the right function.
+            if(jorder == 0):
+                B[i] = g(x, s)
+
+            elif(jorder == 1):
+                B[i] = g1(x, s)
+
+            elif(jorder == 2):
+                B[i] = g2(x, s)
+
+    H = convolve1d(F, A, 0, mode='nearest')
+    H = convolve1d(H, B, 1, mode='nearest')
+    return H
 
 
 
 def g(x, s):
+<<<<<<< HEAD
     return 1.0 / (sqrt(2.0 * pi) * s) * exp(-((x**2) / (2.0* s**2)))
+=======
+    return 1 / (sqrt(2.0 * pi) * s) * e**(-(x**2.0 / (2.0* s**2)))
+>>>>>>> c7372d5fdcf4bebab7ab86bd3c49483e41c773b6
 
-def g1(x, s=2):
-    return -x / (sqrt(2.0 * pi) * s**3) * e**(-(x**2.0 / (2.0* s**2)))
+def g1(x, s):
+    return ((-(x) / (s**3 * sqrt(2.0*pi)))
+                              * exp(-(x**2 / (2.0 * s**2))))
 
-def g2(x, s=2):
-    return  (x**2 / (sqrt(2.0 * pi) * s**5) * e**(-(x**2.0 / (2.0* s**3)))) - (1 / (sqrt(2.0 * pi) * s**3) * e**(-(x**2 / (2.0* s**2))))
+def g2(x, s):
+    return  ((-(s**2 - x**2) / s**5 * sqrt(2.0 * pi))
+                              * exp(-(x**2 / (2.0 * s**2))))
 
 def gauss(funct, s):
     # Determine sample space where the sum of the kernell is more than 0.95
