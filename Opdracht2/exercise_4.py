@@ -39,8 +39,6 @@ def main():
 
 
 def gD(F, s, iorder, jorder):
-
-
     if(iorder == 0):
         A = gauss(g, s)
     elif(iorder == 1):

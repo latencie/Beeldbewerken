@@ -14,9 +14,9 @@ def main():
     Fx = V*A*cos(V*X)
     Fy = W*B*-sin(W*Y)
     
-    # show_image(F)
-    # show_image(Fx)
-    # show_image(Fy)
+    show_image(F)
+    show_image(Fx)
+    show_image(Fy)
 
     xs = arange(-100, 101, 10)
     ys = arange(-100,101, 10)
