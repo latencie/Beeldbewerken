@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.axes3d import Axes3D
 
 def main():
-    s = 10.0
+    s = 2.0
     m = gauss_1(s)
 
     img = imread('images/cameraman.png')
@@ -15,7 +15,7 @@ def main():
     imshow(img2, cmap=cm.gray)
     show()
 
-def gauss_1(s=2):
+def gauss_1(s):
     # Determine sample space where the sum of the kernell is more than 0.95
     sample = s * 6 + 1
 

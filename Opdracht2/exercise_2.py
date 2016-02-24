@@ -10,15 +10,10 @@ from mpl_toolkits.mplot3d.axes3d import Axes3D
 # 
 def main():
 
-	s = 10.0
+	s = 15.0
 	m = gauss(s)
 	img = imread('images/cameraman.png')
-
-	# figure()
-	# add_subplot()
 	img2 = convolve(img, m, mode='nearest')
-	# imshow(img2, cmap=cm.gray)
-	# show()
 	
 	xs = ys = linspace(-3*s+0.5, 3*s+0.5)
 	Xs, Ys = meshgrid(xs,ys)

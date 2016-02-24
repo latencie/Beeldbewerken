@@ -8,9 +8,34 @@ def main():
 
     s = 2.0
     img = imread('images/cameraman.png')
-    img2 = gD(img, s, 1, 1)
-    imshow(img2, cmap=cm.gray)
+    img1 = gD(img, s, 0, 0)
+    img2 = gD(img, s, 1, 0)
+    img3 = gD(img, s, 0, 1)
+    img4 = gD(img, s, 2, 0)
+    img5 = gD(img, s, 0, 2)
+    img6 = gD(img, s, 1, 1)
+
+    fig = plt.figure()
+    ax1 = fig.add_subplot(2, 3, 1)
+    ax1.set_title("Fzero")
+    ax1.imshow(img1, cmap=cm.gray)
+    ax2 = fig.add_subplot(2, 3, 2)
+    ax2.set_title("Fx")
+    ax2.imshow(img2, cmap=cm.gray)
+    ax3 = fig.add_subplot(2, 3, 3)
+    ax3.set_title("Fy")
+    ax3.imshow(img3, cmap=cm.gray)
+    ax4 = fig.add_subplot(2, 3, 4)
+    ax4.set_title("Fxx")
+    ax4.imshow(img4, cmap=cm.gray)
+    ax5 = fig.add_subplot(2, 3, 5)
+    ax5.set_title("Fyy")
+    ax5.imshow(img5, cmap=cm.gray)
+    ax6 = fig.add_subplot(2, 3, 6)
+    ax6.set_title("Fxy")
+    ax6.imshow(img6, cmap=cm.gray)
     show()
+
 
 
 def gD(F, s, iorder, jorder):
