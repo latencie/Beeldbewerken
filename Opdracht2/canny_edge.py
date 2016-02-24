@@ -12,19 +12,20 @@ def main():
     imshow(img2, cmap=cm.gray)
     show()
     
-def canny(F, s = 2):
+def canny(F, s):
     Fx = gD(F, s, 1, 0)
     Fy = gD(F, s, 0, 1)
     Fxx = gD(F, s, 2, 0)
     Fyy = gD(F, s, 0, 2)
     Fxy = gD(F, s, 1, 1)
 
+
     width, height = F.shape
     new_img = empty([width, height])
 
     t = 0.007
-    for i in range(0, width - 1):
-        for j in range(0, height - 1):
+    for i in range(0, height - 1):
+        for j in range(0, width - 1):
             first_check = sqrt(Fx[i, j] * Fx[i, j] + Fy[i, j] * Fy[i, j])
 
             if(first_check > t):
@@ -34,13 +35,13 @@ def canny(F, s = 2):
     return new_img
 
 def zero_crossings(F, s, Fx, Fy, Fxx, Fyy, Fxy, x, y):
-    for i in range(0, 3):
+    for i in range(0, 4):
         if i == 0:
             x_check = 1
-            y_check = 0
+            y_check = 1
         elif i == 1:
             x_check = 1
-            y_check = 1
+            y_check = 0
         elif i == 2:
             x_check = 0
             y_check = 1
@@ -69,7 +70,7 @@ def zero_crossings(F, s, Fx, Fy, Fxx, Fyy, Fxy, x, y):
                    Fy[x - x_check, y - y_check] * 
                    Fyy[x - x_check, y - y_check])
 
-        if((point_1 < 0 and point_2 > 0) or (point_1 > 0 and point_2 < 0)):
+        if(point_1 < 0 and point_2 > 0 or point_1 > 0 and point_2 < 0):
             return True
 
 def gD(F, s, iorder, jorder):
@@ -94,8 +95,8 @@ def gD(F, s, iorder, jorder):
 
 
 
-def g(x, s=2):
-    return 1 / (sqrt(2.0 * pi) * s) * e**(-(x**2.0 / (2.0* s**2)))
+def g(x, s):
+    return 1.0 / (sqrt(2.0 * pi) * s) * exp(-((x**2) / (2.0* s**2)))
 
 def g1(x, s=2):
     return -x / (sqrt(2.0 * pi) * s**3) * e**(-(x**2.0 / (2.0* s**2)))
@@ -103,14 +104,14 @@ def g1(x, s=2):
 def g2(x, s=2):
     return  (x**2 / (sqrt(2.0 * pi) * s**5) * e**(-(x**2.0 / (2.0* s**3)))) - (1 / (sqrt(2.0 * pi) * s**3) * e**(-(x**2 / (2.0* s**2))))
 
-def gauss(funct, s=2):
+def gauss(funct, s):
     # Determine sample space where the sum of the kernell is more than 0.95
     sample = s * 6 + 1
 
     if(sample % 2 == 0): 
         sample +=1
 
-    half_sample = sample/2
+    half_sample = sample/2.0
 
     x = arange(-half_sample, half_sample + 1)
 
