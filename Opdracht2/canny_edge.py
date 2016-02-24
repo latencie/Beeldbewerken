@@ -95,13 +95,13 @@ def gD(F, s, iorder, jorder):
 
 
 def g(x, s=2):
-    return 1 / (sqrt(2.0 * pi) * s) * e**(-(x**2.0 / (2* s**2)))
+    return 1 / (sqrt(2.0 * pi) * s) * e**(-(x**2.0 / (2.0* s**2)))
 
 def g1(x, s=2):
-    return -x / (sqrt(2.0 * pi) * s**3) * e**(-(x**2.0 / (2* s**2)))
+    return -x / (sqrt(2.0 * pi) * s**3) * e**(-(x**2.0 / (2.0* s**2)))
 
 def g2(x, s=2):
-    return  (x**2 / (sqrt(2.0 * pi) * s**5) * e**(-(x**2.0 / (2* s**3)))) - (1 / (sqrt(2.0 * pi) * s**3) * e**(-(x**2 / (2* s**2))))
+    return  (x**2 / (sqrt(2.0 * pi) * s**5) * e**(-(x**2.0 / (2.0* s**3)))) - (1 / (sqrt(2.0 * pi) * s**3) * e**(-(x**2 / (2.0* s**2))))
 
 def gauss(funct, s=2):
     # Determine sample space where the sum of the kernell is more than 0.95
