@@ -1,13 +1,16 @@
-from pylab import *
-import numpy as np
-from scipy.ndimage import convolve;
-import cv2
-from scipy.ndimage import convolve1d;
+# Students: Ajit Jena & Lars Lokhoff
+# Student id's: 5730066 & 10606165
+# 24-02-2016
+# This file outputs all the convolved images of each different order
+from pylab import imread, plt, cm, show, sqrt, e, arange, pi
+from scipy.ndimage import convolve1d
+
 
 def main():
-
     s = 2.0
-    img = imread('images/cameraman.png')
+    img = imread('cameraman.png')
+
+    # Create all the images with each a differen order of convolution
     img1 = gD(img, s, 0, 0)
     img2 = gD(img, s, 1, 0)
     img3 = gD(img, s, 0, 1)
@@ -37,8 +40,9 @@ def main():
     show()
 
 
-
+# This function convolves an image according to the given order
 def gD(F, s, iorder, jorder):
+    # Create the first half of the convolution
     if(iorder == 0):
         A = gauss(g, s)
     elif(iorder == 1):
@@ -46,6 +50,7 @@ def gD(F, s, iorder, jorder):
     elif(iorder == 2):
         A = gauss(g2, s)
 
+    # Create the second half of the convolution
     if(jorder == 0):
         B = gauss(g, s)
     elif(jorder == 1):
@@ -53,32 +58,37 @@ def gD(F, s, iorder, jorder):
     elif(jorder == 2):
         B = gauss(g2, s)
 
+    # Convolve in te right order
     Fc = convolve1d(F, A, axis=0, mode='nearest')
     Fc = convolve1d(Fc, B, axis=1, mode='nearest')
 
     return Fc
 
 
-
+# Return the Gaussian formula
 def g(x, s=2):
-    return 1 / (sqrt(2 * pi) * s) * e**(-(x**2 / (2* s**2)))
+    return 1 / (sqrt(2 * pi) * s) * e**(-(x**2 / (2 * s**2)))
 
+
+# Return the first order derivative of the Gaussian formula
 def g1(x, s=2):
     return g(x, s) * (-x/s**2)
 
+
+# Return the second order of the derivative of the Gaussian formula
 def g2(x, s=2):
-    return  g1(x, s) * (-x/s**2) + (g1(x, s) / x)
+    return g1(x, s) * (-x/s**2) + (g1(x, s) / x)
 
 
-
+# This function creates the guass kernel
 def gauss(funct, s=2):
-    # Determine sample space where the sum of the kernell is more than 0.95
+    #  Determine sample space where the sum of the kernell is more than 0.95
     sample = s * 6 + 1
 
-    if(sample % 2 == 0): 
-        sample +=1
+    if(sample % 2 == 0):
+        sample += 1
 
-    half_sample = sample/2
+    half_sample = sample / 2
 
     x = arange(-half_sample, half_sample + 1)
 
