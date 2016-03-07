@@ -20,33 +20,33 @@ def pickMatchingPoints(im1, im2, n):
     cv2.imshow('Image 1',dispim1)
     cv2.imshow('Image 2',dispim2)
 
-    xy = zeros((4,2))
-    for i in range(n):
-       print 'Click at point %s in image 1' % (i+1)
-       x, y = ginput('Image 1', 1)
-       marker(dispim1, x, y, 3, str(i+1))
-       cv2.imshow('Image 1', dispim1)
-       xy[i,0]=x
-       xy[i,1]=y
+    # xy = zeros((4,2))
+    # for i in range(n):
+    #    print 'Click at point %s in image 1' % (i+1)
+    #    x, y = ginput('Image 1', 1)
+    #    marker(dispim1, x, y, 3, str(i+1))
+    #    cv2.imshow('Image 1', dispim1)
+    #    xy[i,0]=x
+    #    xy[i,1]=y
        
-    xaya = zeros((4,2))
-    for i in range(n):
-       print 'Click at point %s in image 2' % (i+1)
-       x, y = ginput('Image 2', 1)
-       marker(dispim2, x, y, 3, str(i+1))
-       cv2.imshow('Image 2', dispim2)
-       xaya[i,0]=x
-       xaya[i,1]=y
+    # xaya = zeros((4,2))
+    # for i in range(n):
+    #    print 'Click at point %s in image 2' % (i+1)
+    #    x, y = ginput('Image 2', 1)
+    #    marker(dispim2, x, y, 3, str(i+1))
+    #    cv2.imshow('Image 2', dispim2)
+    #    xaya[i,0]=x
+       # xaya[i,1]=y
 
     # the are points i have clicked that lead to reasonable result    
-    # xy = array([[ 157, 32],
-    #             [ 211, 37],
-    #             [ 222,107],
-    #             [ 147,124]])
-    # xaya = array([[  6, 38],
-    #               [ 56, 31],
-    #               [ 82, 87],
-    #               [ 22,118]])
+    xy = array([[ 157, 32],
+                [ 211, 37],
+                [ 222,107],
+                [ 147,124]])
+    xaya = array([[  6, 38],
+                  [ 56, 31],
+                  [ 82, 87],
+                  [ 22,118]])
     
     return xy, xaya
     
@@ -77,7 +77,7 @@ if __name__=="__main__":
     xy, xaya = pickMatchingPoints(im1, im2, 4)
 
     
-    P = cv2.getPerspectiveTransform(xy.astype(float32),xaya.astype(float32))
+    P = perspectiveTransform(xy, xaya)
     
     # I warp from image2 to image1 because image 1 is nicely upright
     # The sizez of images are set by trial and error...
