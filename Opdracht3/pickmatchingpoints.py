@@ -55,9 +55,11 @@ def perspectiveTransform(xy, xaya):
     #create the matrix
     matrix = zeros(shape = (2*len(xy), 9))
 
+    #change the appropriate lines in the matrix according to xy length
     for i in range(len(xy)):
         matrix[i*2 -1] = [xy[i][0], xy[i][1], 1, 0, 0, 0, -xaya[i][0]*xy[i][0],
         -xaya[i][0]*xy[i][1], -xaya[i][0]]
+
         matrix[i*2] = [0, 0, 0, xy[i][0], xy[i][1], 1, -xaya[i][1]*xy[i][0],
          -xaya[i][1]*xy[i][1], -xaya[i][1]]
             
@@ -86,7 +88,7 @@ if __name__=="__main__":
     # both (warped) images.
     # In the warped version of image2 i simply overwrite with data
     # from image 1.
-    tim = cv2.warpPerspective(im2, linalg.inv(P), (450,300))
+    tim = cv2.warpPerspective(im2, linalg.inv(P), (450,400))
     M,N = im1.shape[:2]
     tim[0:M,0:N,:]=im1
     cv2.waitKey(1)
