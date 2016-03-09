@@ -22,6 +22,14 @@ def main():
                 [392.8288, 251.4589], [419.1301, 223.9051]
                 ])
 
+    im = imread("calibrationpoints.jpg")
+    imshow(im)
+    plot(xy[:,0],xy[:,1],'d')
+    show()
+
+    P = callibrate(xy, XYZ)
+
+    print P * XYZ
 
 def callibrate(xy, XYZ):
     matrix = zeros(shape = (2 * len(xy), 12))
@@ -30,11 +38,11 @@ def callibrate(xy, XYZ):
         matrix[2 * i - 1] = [XYZ[i][0], XYZ[i][1], XYZ[i][2], 1, 0, 0, 0, 0,
                             -xy[i][0] * XYZ[i][0], -xy[i][0] * XYZ[i][1],
                             -xy[i][0] * XYZ[i][2], -xy[i][0]] 
-        matrix[2 * i] = [0, 0, 0, 0, XYZ[i][0], XYZ[i][1], XYZ[i][2], 1
+        matrix[2 * i] = [0, 0, 0, 0, XYZ[i][0], XYZ[i][1], XYZ[i][2], 1,
                         -xy[i][1] * XYZ[i][0], -xy[i][1] * XYZ[i][1],
                         -xy[i][1] * XYZ[i][2], -xy[i][1]]
 
-    U, V, D = svd(matrix)
+    U, D, V = svd(matrix)
 
     P = V[-1].reshape(3, 4)
 
