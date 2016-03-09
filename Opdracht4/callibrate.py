@@ -30,6 +30,8 @@ def main():
     P = callibrate(xy, XYZ)
 
     print P
+    test = dot(P, array([0, -5, 5, 1]).T)
+    print test/test[2]
 
 def callibrate(xy, XYZ):
     matrix = zeros(shape = (2 * len(xy), 12))
@@ -46,6 +48,8 @@ def callibrate(xy, XYZ):
 
 
     P = V[-1].reshape(3, 4)
+
+
 
     return P
 
