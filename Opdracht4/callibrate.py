@@ -22,16 +22,17 @@ def main():
                 [392.8288, 251.4589], [419.1301, 223.9051]
                 ])
 
-    # im = imread("calibrationpoints.jpg")
-    # imshow(im)
-    # plot(xy[:,0],xy[:,1],'d')
-    # show()
-
     P = callibrate(xy, XYZ)
+    reprojection_error(P, XYZ, xy)
 
-    print P
-    test = dot(P, array([0, -5, 5, 1]).T)
-    print test/test[2]
+    im = imread("calibrationpoints.jpg")
+    imshow(im)
+
+    draw_cube(P, 0, 0, 0)
+    draw_cube(P, -4, 0, 4)
+    draw_cube(P, 0, -7, 6)
+
+    show()
 
 def callibrate(xy, XYZ):
     matrix = zeros(shape = (2 * len(xy), 12))
@@ -46,12 +47,60 @@ def callibrate(xy, XYZ):
 
     U, D, V = svd(matrix)
 
-
     P = V[-1].reshape(3, 4)
 
-
-
     return P
+
+def reprojection_error(P, XYZ, xy):
+    homogenous = zeros(shape = (len(XYZ), 4))
+    euclidean = 0
+
+    for i in range(len(XYZ)):
+        #Make homogenous
+        homogenous[i] = np.append(XYZ[i], [1])
+
+        #Calculate dot product and calculate real points by dividing
+        dotprod = dot(P, homogenous[i])
+        dotprod[0] = dotprod[0] / dotprod[2]
+        dotprod[1] = dotprod[1] / dotprod[2]
+
+        #Calculate euclidean error and add to total
+        euclidean += sqrt((xy[i][0] - dotprod[0])**2 +  (xy[i][1] - dotprod[1])**2)
+
+    euclidean = euclidean / len(XYZ)
+
+    print euclidean
+
+def draw_cube(P, x, y, z):
+    left_coords = zeros(shape = (4, 2))
+    right_coords = zeros(shape = (4, 2))
+
+    #Calculate points of the left and right square (divided the 8 points in 2 halves)
+    for i in range(4):
+        if i == 0:
+            left_point = dot(P, [x, y, z, 1])
+            right_point = dot(P, [x, y + 1, z, 1])
+        elif i == 1:
+            left_point = dot(P, [x + 1, y, z, 1])
+            right_point = dot(P, [x + 1, y + 1, z, 1])
+        elif i == 2:
+            left_point = dot(P, [x + 1, y, z + 1, 1])
+            right_point = dot(P, [x + 1, y + 1, z + 1, 1])
+        elif i == 3:
+            left_point = dot(P, [x, y, z + 1, 1])
+            right_point = dot(P, [x, y + 1, z + 1, 1])
+
+        #Set the coordinates in the array
+        left_coords[i][0] = left_point[0] / left_point[2]
+        left_coords[i][1] = left_point[1] / left_point[2]
+        right_coords[i][0] = right_point[0] / right_point[2]
+        right_coords[i][1] = right_point[1] / right_point[2]
+
+    #Connect all coordinates and draw them
+    for i in range(len(left_coords)):
+        plot([left_coords[i][0], left_coords[(i + 1) % 4][0]], [left_coords[i][1], left_coords[(i + 1) % 4][1]], color ="cyan", lw = 1.5)
+        plot([right_coords[i][0], right_coords[(i + 1) % 4][0]], [right_coords[i][1], right_coords[(i + 1) % 4][1]], color ="cyan", lw = 1.5)
+        plot([left_coords[i][0], right_coords[i][0]], [left_coords[i][1], right_coords[i][1]], color ="cyan", lw = 1.5)
 
 if __name__ == "__main__":
     main()
