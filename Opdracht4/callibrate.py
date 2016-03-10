@@ -28,9 +28,7 @@ def main():
     im = imread("calibrationpoints.jpg")
     imshow(im)
 
-    draw_cube(P, 0, 0, 0)
-    draw_cube(P, -4, 0, 4)
-    draw_cube(P, 0, -7, 6)
+    animate_cube(P)
 
     show()
 
@@ -101,6 +99,13 @@ def draw_cube(P, x, y, z):
         plot([left_coords[i][0], left_coords[(i + 1) % 4][0]], [left_coords[i][1], left_coords[(i + 1) % 4][1]], color ="cyan", lw = 1.5)
         plot([right_coords[i][0], right_coords[(i + 1) % 4][0]], [right_coords[i][1], right_coords[(i + 1) % 4][1]], color ="cyan", lw = 1.5)
         plot([left_coords[i][0], right_coords[i][0]], [left_coords[i][1], right_coords[i][1]], color ="cyan", lw = 1.5)
+
+
+def animate_cube(P):
+    x = 0
+    y = -7
+    
+    draw_cube(P, x, y, 0)
 
 if __name__ == "__main__":
     main()
