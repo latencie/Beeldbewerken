@@ -1,4 +1,5 @@
 from pylab import *
+from sympy.solvers import solve
 
 
 def main():
@@ -25,12 +26,7 @@ def main():
     P = callibrate(xy, XYZ)
     reprojection_error(P, XYZ, xy)
 
-    im = imread("calibrationpoints.jpg")
-    imshow(im)
-
     animate_cube(P)
-
-    show()
 
 def callibrate(xy, XYZ):
     matrix = zeros(shape = (2 * len(xy), 12))
@@ -94,18 +90,48 @@ def draw_cube(P, x, y, z):
         right_coords[i][0] = right_point[0] / right_point[2]
         right_coords[i][1] = right_point[1] / right_point[2]
 
+    im = imread("calibrationpoints.jpg")
+    imshow(im)
+
     #Connect all coordinates and draw them
     for i in range(len(left_coords)):
         plot([left_coords[i][0], left_coords[(i + 1) % 4][0]], [left_coords[i][1], left_coords[(i + 1) % 4][1]], color ="cyan", lw = 1.5)
         plot([right_coords[i][0], right_coords[(i + 1) % 4][0]], [right_coords[i][1], right_coords[(i + 1) % 4][1]], color ="cyan", lw = 1.5)
         plot([left_coords[i][0], right_coords[i][0]], [left_coords[i][1], right_coords[i][1]], color ="cyan", lw = 1.5)
 
+    show()
+
+def f(x):
+    x = x**2
+    return sqrt(49 - x)
 
 def animate_cube(P):
     x = 0
     y = -7
     
-    draw_cube(P, x, y, 0)
+    for i in range(70):
+        draw_cube(P, x, y, 0)
+        x += 0.1
+        y = -f(x)
+        print x, y
+
+    x = 7
+    y = 0
+    for i in range(70):
+        draw_cube(P, x, y, 0)
+        x -= 0.1
+        y = f(x)
+        print x, y
+
+    x = 0
+    y = 7
+    for i in range(70):
+        draw_cube(P, x, y, 0)
+        x -= 0.1
+        y = f(x)
+        print x, y
+
+        
 
 if __name__ == "__main__":
     main()
