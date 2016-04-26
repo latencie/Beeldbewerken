@@ -53,7 +53,7 @@ def reprojection_error(P, XYZ, xy):
         #Make homogenous
         homogenous[i] = np.append(XYZ[i], [1])
 
-        #Calculate dot product and calculate real points by dividing
+        #Calculate dot product and calculate real points by dividing first 2 
         dotprod = dot(P, homogenous[i])
         dotprod[0] = dotprod[0] / dotprod[2]
         dotprod[1] = dotprod[1] / dotprod[2]
@@ -63,7 +63,7 @@ def reprojection_error(P, XYZ, xy):
 
     euclidean = euclidean / len(XYZ)
 
-    print euclidean
+    print "The average reprojection error:", euclidean
 
 def draw_cube(P, x, y, z):
     left_coords = zeros(shape = (4, 2))
@@ -95,9 +95,14 @@ def draw_cube(P, x, y, z):
 
     #Connect all coordinates and draw them
     for i in range(len(left_coords)):
-        plot([left_coords[i][0], left_coords[(i + 1) % 4][0]], [left_coords[i][1], left_coords[(i + 1) % 4][1]], color ="cyan", lw = 1.5)
-        plot([right_coords[i][0], right_coords[(i + 1) % 4][0]], [right_coords[i][1], right_coords[(i + 1) % 4][1]], color ="cyan", lw = 1.5)
-        plot([left_coords[i][0], right_coords[i][0]], [left_coords[i][1], right_coords[i][1]], color ="cyan", lw = 1.5)
+        plot([left_coords[i][0], left_coords[(i + 1) % 4][0]], 
+            [left_coords[i][1], left_coords[(i + 1) % 4][1]], color ="cyan", lw = 1.5)
+
+        plot([right_coords[i][0], right_coords[(i + 1) % 4][0]], 
+            [right_coords[i][1], right_coords[(i + 1) % 4][1]], color ="cyan", lw = 1.5)
+        
+        plot([left_coords[i][0], right_coords[i][0]], [left_coords[i][1], 
+            right_coords[i][1]], color ="cyan", lw = 1.5)
 
     show()
 
